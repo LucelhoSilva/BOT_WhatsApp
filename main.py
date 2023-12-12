@@ -5,29 +5,31 @@ from time import sleep
 import pyautogui
 import os
 
-workbook = openpyxl.load_workbook('clientes.xlsx')
+workbook = openpyxl.load_workbook('Contatos_Exterior.xlsx')
 pagina_clientes = workbook['Sheet1']
 
-for linha in pagina_clientes.iter_rows(min_row=2):
-    nome = linha[0].value
-    telefone = linha[1].value
+url_video = 'https://youtube.com/shorts/s_fi3xGlHAI?feature=share'
 
-    mensagem = f'Olá {nome} tudo bem ?. 🚀 Venha fazer parte dessa comunidade no Discord !! 🚀🔗 Link de Convite: https://discord.com/invite/QXzdGW8FaT Aqui você vai encontrar: Vagas de emprego 💼 , Freelancer 🛠e Cursos gratuitos 📚 disponíveis 24 horas. Além de espaço para desenvolver projetos colaborativos 🤝 efazer networking 🌐'
+for linha in pagina_clientes.iter_rows(min_row=2):
+    telefone = linha[0].value
+
+    mensagem = f'{url_video}\n\n *Olá tudo bem ?*\n🚀 *Venha fazer parte dessa comunidade no Discord !!* 🚀 \n\n🔗 *Link de Convite:* https://discord.com/invite/QXzdGW8FaT \n\n*Aqui você vai encontrar:* \n\n*Vagas de emprego* 💼 , *Freelancer 🛠e Cursos gratuitos* 📚 *disponíveis 24 horas. Além de espaço para desenvolver projetos colaborativos* 🤝 *e fazer networking* 🌐'
+
+    mensagem_exterior = f'{url_video}\n\n *Hello, how are you?*\n🚀 *Come and be part of this community on Discord!!* 🚀 \n\n🔗 *Invitation Link:* https://discord.com/invite/QXzdGW8FaT \n\n*Here you will find:* \n\n*Job vacancies* 💼, *Freelancer 🛠and Free courses* 📚 *available 24 hours. In addition to space to develop collaborative projects* 🤝 *and network* 🌐'
 
     try:
-        link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem)}'
+        link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem_exterior)}'
         webbrowser.open(link_mensagem_whatsapp)
-        sleep(20)  
-        seta = pyautogui.locateCenterOnScreen(
-            'seta.png', grayscale=True, confidence=0.8)
+        sleep(25)
+        seta = pyautogui.locateCenterOnScreen('seta.png', grayscale=True, confidence=0.8)
         if seta is not None:
             pyautogui.click(seta[0], seta[1])
-            sleep(5)  
+            sleep(5)
             pyautogui.hotkey('ctrl', 'w')
         else:
-            print(f'Botão de envio não encontrado para {nome}')
-        sleep(5)  
+            print(f'Botão de envio não encontrado para {telefone}')
+        sleep(5)
     except Exception as e:
-        print(f'Não foi possível enviar mensagem para {nome}, erro: {e}')
+        print(f'Não foi possível enviar mensagem para {telefone}, erro: {e}')
         with open('erros.csv', 'a', newline='', encoding='utf-8') as arquivo:
-            arquivo.write(f'{nome},{telefone}{os.linesep}')
+            arquivo.write(f'{telefone},{telefone}{os.linesep}')
