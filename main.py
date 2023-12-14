@@ -4,8 +4,9 @@ import webbrowser
 from time import sleep
 import pyautogui
 import os
+from random import randint
 
-workbook = openpyxl.load_workbook('Contatos_Exterior.xlsx')
+workbook = openpyxl.load_workbook('Contatos_Brasil.xlsx')
 pagina_clientes = workbook['Sheet1']
 
 url_video = 'https://youtube.com/shorts/s_fi3xGlHAI?feature=share'
@@ -18,17 +19,17 @@ for linha in pagina_clientes.iter_rows(min_row=2):
     mensagem_exterior = f'{url_video}\n\n *Hello, how are you?*\n🚀 *Come and be part of this community on Discord!!* 🚀 \n\n🔗 *Invitation Link:* https://discord.com/invite/QXzdGW8FaT \n\n*Here you will find:* \n\n*Job vacancies* 💼, *Freelancer 🛠and Free courses* 📚 *available 24 hours. In addition to space to develop collaborative projects* 🤝 *and network* 🌐'
 
     try:
-        link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem_exterior)}'
+        link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem)}'
         webbrowser.open(link_mensagem_whatsapp)
-        sleep(25)
+        sleep(randint(60, 300)) #Espera de 1 a 5 minutos
         seta = pyautogui.locateCenterOnScreen('seta.png', grayscale=True, confidence=0.8)
         if seta is not None:
             pyautogui.click(seta[0], seta[1])
-            sleep(5)
+            sleep(randint(60, 300))  # Espera de 1 a 5 minutos
             pyautogui.hotkey('ctrl', 'w')
         else:
             print(f'Botão de envio não encontrado para {telefone}')
-        sleep(5)
+        sleep(randint(60, 300))  # Espera de 1 a 5 minutos
     except Exception as e:
         print(f'Não foi possível enviar mensagem para {telefone}, erro: {e}')
         with open('erros.csv', 'a', newline='', encoding='utf-8') as arquivo:
